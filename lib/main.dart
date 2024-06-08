@@ -1,4 +1,3 @@
-import 'package:app_stream_anime/view/sliderPage/slider_page.dart';
 import 'package:flutter/material.dart';
 
 import 'view/loginPage/login_page.dart';
@@ -17,7 +16,6 @@ class MyApp extends StatelessWidget {
       title: 'GodSlayerFlix.',
       routes: {
         '/': (context) => const SplashScreen(),
-        '/caurosel': (context) => const SliderPage(),
         '/login': (context) => const LoginPage(),
       },
     );
