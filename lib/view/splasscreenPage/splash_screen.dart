@@ -14,12 +14,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Color _backgroundColor = AppColors.primary;
-
   @override
   void initState() {
     super.initState();
-
     Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, "/login");
     });
@@ -29,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: _backgroundColor,
+        color: AppColors.primary,
         child: Center(
           child: Container(
             height: 100,
@@ -40,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 const FaIcon(
                   FontAwesomeIcons.infinity,
-                  size: 55,
+                  size: 40,
                   shadows: [
                     Shadow(
                       color: Colors.white,
@@ -49,8 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ],
                   color: AppColors.whiteColors,
-                ),
-                const SizedBox(width: 10),
+                ),  
                 Text(
                   'GodSlayerFlix.',
                   style: textSplash.copyWith(
