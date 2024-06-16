@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../constant/colors.dart';
 import 'home/home_page.dart';
+import 'menu/dashboard_menu.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -24,9 +25,7 @@ class _DashboardPageState extends State<DashboardPage> {
             index: selectedItem,
             children: [
               const HomePage(),
-              Container(
-                color: Colors.green,
-              ),
+              const DashboardMenu(),
               Container(
                 color: Colors.blue,
               ),

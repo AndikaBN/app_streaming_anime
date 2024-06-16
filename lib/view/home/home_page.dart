@@ -1,15 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
-import 'package:app_stream_anime/widget/space.dart';
+import 'package:app_stream_anime/widget/card_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:app_stream_anime/widget/space.dart';
+
 import '../../constant/colors.dart';
 import '../../constant/fonts.dart';
+import '../../data/model/anime_movie.dart';
+import '../../data/model/anime_series.dart';
+import 'detail_movie_home.dart';
+import 'detail_series_home.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({
+    super.key,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,8 +27,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   final CarouselController carouselController = CarouselController();
-
-  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -115,76 +122,94 @@ class _HomePageState extends State<HomePage> {
               }),
               const SpaceHeight(20.0),
               Builder(builder: (context) {
-                List categories = [
-                  {
-                    "label": "Food",
-                    "image":
-                        "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-                  },
-                  {
-                    "label": "Main Course",
-                    "image":
-                        "https://images.unsplash.com/photo-1593253787226-567eda4ad32d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-                  },
-                  {
-                    "label": "Drink",
-                    "image":
-                        "https://images.unsplash.com/photo-1527661591475-527312dd65f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=415&q=80",
-                  },
-                  {
-                    "label": "Snack",
-                    "image":
-                        "https://images.unsplash.com/photo-1580314552228-5a7ce023fc9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80",
-                  },
-                ];
-
                 return ListView.builder(
-                  itemCount: categories.length,
+                  itemCount: animeList.length,
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
-                    var item = categories[index];
-                    return Container(
-                      height: 100.0,
-                      clipBehavior: Clip.antiAlias,
-                      margin: EdgeInsets.only(
-                        bottom: 12.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                            8.0,
-                          ),
+                    var item = animeList[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailHome(
+                                    animeMovie: item,
+                                  )),
+                        );
+                      },
+                      child: Container(
+                        height: 100.0,
+                        clipBehavior: Clip.antiAlias,
+                        margin: EdgeInsets.only(
+                          bottom: 12.0,
                         ),
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            item["image"],
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.6),
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              8.0,
                             ),
                           ),
-                          Center(
-                            child: Text(
-                              item["label"],
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.white,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              item.image,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.6),
                               ),
                             ),
-                          ),
-                        ],
+                            Center(
+                              child: Text(
+                                item.title,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
                 );
               }),
+              const SpaceHeight(20),
+              SizedBox(
+                height: 240.0,
+                child: ListView.builder(
+                  itemCount: animeSeries.length,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.zero,
+                  clipBehavior: Clip.none,
+                  itemBuilder: (context, index) {
+                    var item = animeSeries[index];
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailSeries(animeSeries: item)),
+                        );
+                      },
+                      child: CardItem(
+                        image: item.image,
+                        title: item.title,
+                        genre: item.genre,
+                        status: item.status,
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SpaceHeight(100),
             ],
           ),
         ),

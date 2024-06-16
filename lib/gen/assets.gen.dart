@@ -52,9 +52,21 @@ class $AssetsImagesGen {
   AssetGenImage get wakandaPoreper =>
       const AssetGenImage('assets/images/wakanda-poreper.png');
 
+  /// File path: assets/images/wpp-blurr.jpg
+  AssetGenImage get wppBlurr =>
+      const AssetGenImage('assets/images/wpp-blurr.jpg');
+
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [antMan, avenger, farFromHome, noWayHome, sangchi, thor, wakandaPoreper];
+  List<AssetGenImage> get values => [
+        antMan,
+        avenger,
+        farFromHome,
+        noWayHome,
+        sangchi,
+        thor,
+        wakandaPoreper,
+        wppBlurr
+      ];
 }
 
 class Assets {
