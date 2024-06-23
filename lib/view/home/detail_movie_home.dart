@@ -1,7 +1,8 @@
-import 'package:app_stream_anime/constant/fonts.dart';
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
+import '../../constant/fonts.dart';
 import '../../data/model/anime_movie.dart';
-
 
 class DetailHome extends StatefulWidget {
   const DetailHome({
@@ -16,47 +17,47 @@ class DetailHome extends StatefulWidget {
 }
 
 class _DetailHomeState extends State<DetailHome> {
+  late FlickManager flickManager;
+
+  @override
+  void initState() {
+    super.initState();
+    flickManager = FlickManager(
+      videoPlayerController: VideoPlayerController.network(
+        widget.animeMovie.video,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    flickManager.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Dashboard"),
-        actions: const [],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Text(
-                widget.animeMovie.title,
-                style: whiteTextStyle.copyWith(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            FlickVideoPlayer(flickManager: flickManager),
+            const SizedBox(height: 10),
+            Text(
+              widget.animeMovie.title,
+              style: whiteTextStyle.copyWith(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              Text(
-                widget.animeMovie.genre,
-                style: whiteTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              widget.animeMovie.description,
+              style: whiteTextStyle.copyWith(
+                fontSize: 16,
               ),
-              Image.asset(widget.animeMovie.image),
-              Text(widget.animeMovie.description,
-                  style: whiteTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text(
-                widget.animeMovie.video,
-                style: whiteTextStyle.copyWith(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

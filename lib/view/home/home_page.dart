@@ -121,65 +121,63 @@ class _HomePageState extends State<HomePage> {
                 );
               }),
               const SpaceHeight(20.0),
-              Builder(builder: (context) {
-                return ListView.builder(
-                  itemCount: animeList.length,
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    var item = animeList[index];
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DetailHome(
-                                    animeMovie: item,
-                                  )),
-                        );
-                      },
-                      child: Container(
-                        height: 100.0,
-                        clipBehavior: Clip.antiAlias,
-                        margin: EdgeInsets.only(
-                          bottom: 12.0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(
-                              8.0,
-                            ),
-                          ),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              item.image,
-                            ),
-                            fit: BoxFit.cover,
+              ListView.builder(
+                itemCount: animeList.length,
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  var item = animeList[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailHome(
+                                  animeMovie: item,
+                                )),
+                      );
+                    },
+                    child: Container(
+                      height: 100.0,
+                      clipBehavior: Clip.antiAlias,
+                      margin: EdgeInsets.only(
+                        bottom: 12.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(
+                            8.0,
                           ),
                         ),
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.6),
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                item.title,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            item.image,
+                          ),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    );
-                  },
-                );
-              }),
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.6),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              item.title,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
               const SpaceHeight(20),
               SizedBox(
                 height: 240.0,

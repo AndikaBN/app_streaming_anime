@@ -1,7 +1,9 @@
 import 'dart:ui';
+import 'package:app_stream_anime/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../constant/colors.dart';
+import 'genre/view_by_genre.dart';
 import 'home/home_page.dart';
 import 'menu/dashboard_menu.dart';
 
@@ -23,15 +25,11 @@ class _DashboardPageState extends State<DashboardPage> {
         children: [
           IndexedStack(
             index: selectedItem,
-            children: [
-              const HomePage(),
-              const DashboardMenu(),
-              Container(
-                color: Colors.blue,
-              ),
-              Container(
-                color: Colors.orange,
-              ),
+            children: const [
+              HomePage(),
+              DashboardMenu(),
+              ViewByGenre(),
+              Profile(),
             ],
           ),
           Positioned(
@@ -80,8 +78,8 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 _buildBNBItem(Icons.home_outlined, 0),
                 _buildBNBItem(Icons.apps, 1),
-                _buildBNBItem(Icons.notifications_outlined, 2),
-                _buildBNBItem(Icons.settings_outlined, 3),
+                _buildBNBItem(Icons.category, 2),
+                _buildBNBItem(Icons.person, 3),
               ],
             ),
           ),

@@ -43,7 +43,6 @@ class CardItem extends StatelessWidget {
             padding: const EdgeInsets.all(6.0),
             margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              // ignore: unrelated_type_equality_checks
               color: status == 'OnGoing' ? Colors.orange : Colors.red,
               borderRadius: const BorderRadius.all(
                 Radius.circular(

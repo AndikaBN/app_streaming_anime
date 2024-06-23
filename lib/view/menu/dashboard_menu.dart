@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../constant/fonts.dart';
 import 'all_movie.dart';
+import 'all_series.dart';
 
 class DashboardMenu extends StatefulWidget {
-  const DashboardMenu({Key? key}) : super(key: key);
+  const DashboardMenu({super.key});
 
   @override
   State<DashboardMenu> createState() => _DashboardMenuState();
@@ -69,12 +70,10 @@ class _DashboardMenuState extends State<DashboardMenu> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
-            const AllMovie(),
-            Container(
-              color: Colors.green[100],
-            ),
+            AllMovie(),
+            AllSeries(),
           ],
         ),
       ),

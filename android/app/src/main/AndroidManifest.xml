@@ -2,8 +2,11 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:networkSecurityConfig="@xml/network_security_config"
         android:label="app_stream_anime"
         android:name="${applicationName}"
+        android:enableOnBackInvokedCallback="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

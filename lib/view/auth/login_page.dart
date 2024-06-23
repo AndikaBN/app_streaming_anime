@@ -1,11 +1,16 @@
+import 'package:app_stream_anime/admin/view/admin_home_page.dart';
 import 'package:app_stream_anime/constant/colors.dart';
 import 'package:app_stream_anime/widget/space.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../constant/fonts.dart';
+import '../../data/localDatasource/auth_local_datasource.dart';
 import '../../widget/button.dart';
 import '../../widget/custom_text_field.dart';
 import '../dashboard_page.dart';
+import 'bloc/login/login_bloc.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +22,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,160 +37,220 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           SafeArea(
-            child: Container(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const FaIcon(
-                        FontAwesomeIcons.infinity,
-                        size: 40,
-                        shadows: [
-                          Shadow(
-                            color: Colors.white,
-                            offset: Offset(0, 0),
-                            blurRadius: 5,
-                          ),
-                        ],
-                        color: AppColors.whiteColors,
-                      ),
-                      Text(
-                        'GodSlayerFlix.',
-                        style: textSplash.copyWith(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SpaceHeight(50.0),
-                  Form(
-                    child: Column(
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(40.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CustomTextField(
-                          controller: emailController,
-                          label: "email",
-                          onChanged: (value) {},
-                          obscureText: false,
-                          keyboardType: TextInputType.emailAddress,
-                          showLabel: true,
-                          prefixIcon: const Icon(
-                            Icons.email,
-                            color: AppColors.primary,
-                          ),
-                          suffixIcon: null,
-                          readOnly: false,
+                        const FaIcon(
+                          FontAwesomeIcons.infinity,
+                          size: 40,
+                          shadows: [
+                            Shadow(
+                              color: Colors.white,
+                              offset: Offset(0, 0),
+                              blurRadius: 5,
+                            ),
+                          ],
+                          color: AppColors.whiteColors,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16.0),
-                          child: CustomTextField(
-                            controller: passwordController,
-                            label: "password",
+                        Text(
+                          'GodSlayerFlix.',
+                          style: textSplash.copyWith(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SpaceHeight(50.0),
+                    Form(
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            controller: emailController,
+                            label: "email",
                             onChanged: (value) {},
-                            obscureText: true,
-                            keyboardType: TextInputType.text,
+                            obscureText: false,
+                            keyboardType: TextInputType.emailAddress,
                             showLabel: true,
                             prefixIcon: const Icon(
-                              Icons.lock,
+                              Icons.email,
                               color: AppColors.primary,
                             ),
                             suffixIcon: null,
                             readOnly: false,
                           ),
-                        ),
-                        const SizedBox(height: 16.0),
-                        Button.filled(
-                          onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const DashboardPage()),
-                                (route) => false);
-                          },
-                          label: "Login",
-                          width: double.infinity,
-                          height: 50.0,
-                          borderRadius: 16.0,
-                          icon: null,
-                        ),
-                        const SizedBox(height: 16.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const Text(
-                              "Don’t have an Account ? ",
-                              style: TextStyle(
-                                color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
+                            child: CustomTextField(
+                              controller: passwordController,
+                              label: "password",
+                              onChanged: (value) {},
+                              obscureText: true,
+                              keyboardType: TextInputType.text,
+                              showLabel: true,
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: AppColors.primary,
                               ),
+                              suffixIcon: null,
+                              readOnly: false,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return Container();
+                          ),
+                          const SizedBox(height: 16.0),
+                          BlocListener<LoginBloc, LoginState>(
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                orElse: () {},
+                                success: (authResponseModel) {
+                                  AuthLocalDatasource()
+                                      .saveAuthData(authResponseModel);
+                                  // Periksa peran pengguna
+                                  if (authResponseModel.user!.role == 'admin') {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const AdminHomePage(),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const DashboardPage(),
+                                      ),
+                                    );
+                                  }
+                                },
+                                error: (message) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(message),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: BlocBuilder<LoginBloc, LoginState>(
+                              builder: (context, state) {
+                                return state.maybeWhen(orElse: () {
+                                  return Button.filled(
+                                    onPressed: () {
+                                      if (emailController.text.isEmpty ||
+                                          passwordController.text.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Email dan password tidak boleh kosong'),
+                                            backgroundColor: Colors.red,
+                                          ),
+                                        );
+                                      } else {
+                                        context.read<LoginBloc>().add(
+                                              LoginEvent.login(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text,
+                                              ),
+                                            );
+                                      }
                                     },
-                                  ),
-                                );
+                                    label: "Login",
+                                    width: double.infinity,
+                                    height: 50.0,
+                                    borderRadius: 16.0,
+                                    icon: null,
+                                  );
+                                }, loading: () {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                });
                               },
-                              child: const Text(
-                                "Sign Up",
+                            ),
+                          ),
+                          const SizedBox(height: 16.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const Text(
+                                "Don’t have an Account ? ",
                                 style: TextStyle(
-                                  color: Colors.orange,
-                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return const RegisterPage();
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 30.0,
-                  ),
-                  if (MediaQuery.of(context).viewInsets.bottom == 0)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            radius: 26.0,
-                            backgroundColor: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(
-                                "https://res.cloudinary.com/dotz74j1p/raw/upload/v1716045457/ikiyaxwxuj616fxbqive.png",
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    if (MediaQuery.of(context).viewInsets.bottom == 0)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: CircleAvatar(
+                              radius: 26.0,
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.network(
+                                  "https://res.cloudinary.com/dotz74j1p/raw/upload/v1716045457/ikiyaxwxuj616fxbqive.png",
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 20.0,
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: CircleAvatar(
-                            radius: 26.0,
-                            backgroundColor: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(
-                                "https://res.cloudinary.com/dotz74j1p/raw/upload/v1716045460/fdggcuj6chrzspuog9qa.png",
+                          const SizedBox(
+                            width: 20.0,
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: CircleAvatar(
+                              radius: 26.0,
+                              backgroundColor: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.network(
+                                  "https://res.cloudinary.com/dotz74j1p/raw/upload/v1716045460/fdggcuj6chrzspuog9qa.png",
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                ],
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

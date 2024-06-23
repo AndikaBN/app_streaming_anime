@@ -49,6 +49,7 @@ dependencies:
   custom_rating_bar: ^2.0.5
   video_player: ^2.8.7
   flick_video_player: ^0.8.0
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

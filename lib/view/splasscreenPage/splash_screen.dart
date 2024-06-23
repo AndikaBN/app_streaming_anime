@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app_stream_anime/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constant/fonts.dart';
 
@@ -14,12 +15,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  checkLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      Timer(const Duration(seconds: 5), () {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      });
+    } else {
+      Timer(const Duration(seconds: 5), () {
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
-      Navigator.pushReplacementNamed(context, "/login");
-    });
+    checkLogin();
   }
 
   @override
@@ -46,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ],
                   color: AppColors.whiteColors,
-                ),  
+                ),
                 Text(
                   'GodSlayerFlix.',
                   style: textSplash.copyWith(
