@@ -1,5 +1,6 @@
 part of 'get_genre_bloc.dart';
 
+
 @freezed
 class GetGenreState with _$GetGenreState {
   const factory GetGenreState.initial() = _Initial;

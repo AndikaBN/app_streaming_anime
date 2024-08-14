@@ -28,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
             children: const [
               HomePage(),
               DashboardMenu(),
-              ViewByGenre(),
+              // ViewByGenre(),
               Profile(),
             ],
           ),
@@ -78,8 +78,8 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 _buildBNBItem(Icons.home_outlined, 0),
                 _buildBNBItem(Icons.apps, 1),
-                _buildBNBItem(Icons.category, 2),
-                _buildBNBItem(Icons.person, 3),
+                // _buildBNBItem(Icons.category, 2),
+                _buildBNBItem(Icons.person, 2),
               ],
             ),
           ),

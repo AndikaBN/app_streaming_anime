@@ -5,6 +5,7 @@ import 'package:app_stream_anime/admin/view/Series/pages/update_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../constant/variables.dart';
 import 'pages/tambah_dialog.dart';
 import 'series_bloc/series_bloc.dart';
 
@@ -66,7 +67,7 @@ class _SeriesManagementPageState extends State<SeriesManagementPage> {
                           backgroundImage: NetworkImage(
                             item.image != null && item.image!.contains("http")
                                 ? item.image!
-                                : 'https://example.com/${item.image ?? ''}',
+                                : "${Variables.baseUrl}/${item.image}",
                           ),
                         ),
                         trailing: Row(

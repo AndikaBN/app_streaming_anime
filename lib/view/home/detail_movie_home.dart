@@ -1,3 +1,4 @@
+import 'package:app_stream_anime/data/model/response/movie_response_model.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
@@ -10,7 +11,7 @@ class DetailHome extends StatefulWidget {
     required this.animeMovie,
   });
 
-  final AnimeMovie animeMovie;
+  final Movie animeMovie;
 
   @override
   State<DetailHome> createState() => _DetailHomeState();
@@ -24,7 +25,7 @@ class _DetailHomeState extends State<DetailHome> {
     super.initState();
     flickManager = FlickManager(
       videoPlayerController: VideoPlayerController.network(
-        widget.animeMovie.video,
+        widget.animeMovie.video!,
       ),
     );
   }
@@ -44,7 +45,7 @@ class _DetailHomeState extends State<DetailHome> {
             FlickVideoPlayer(flickManager: flickManager),
             const SizedBox(height: 10),
             Text(
-              widget.animeMovie.title,
+              widget.animeMovie.title!,
               style: whiteTextStyle.copyWith(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -52,7 +53,7 @@ class _DetailHomeState extends State<DetailHome> {
             ),
             const SizedBox(height: 10),
             Text(
-              widget.animeMovie.description,
+              widget.animeMovie.description!,
               style: whiteTextStyle.copyWith(
                 fontSize: 16,
               ),

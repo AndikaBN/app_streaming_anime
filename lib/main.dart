@@ -8,6 +8,7 @@ import 'package:app_stream_anime/data/datasource/episode_remote_datasource.dart'
 import 'package:app_stream_anime/data/datasource/movie_remote_datasource.dart';
 import 'package:app_stream_anime/data/datasource/series_remote_datasource.dart';
 import 'package:app_stream_anime/view/auth/bloc/login/login_bloc.dart';
+import 'package:app_stream_anime/view/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,8 +19,8 @@ import 'admin/view/Series/series_bloc/series_bloc.dart';
 import 'data/datasource/genre_remote_datasource.dart';
 import 'data/model/video_player_bloc/video_player_bloc.dart';
 import 'view/auth/bloc/logout/logout_bloc.dart';
+import 'view/auth/bloc/register/register_bloc.dart';
 import 'view/auth/login_page.dart';
-import 'view/home/home_page.dart';
 import 'view/splasscreenPage/splash_screen.dart';
 
 void main() {
@@ -43,6 +44,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LogoutBloc(
+            AuthRemoteDatasource(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => RegisterBloc(
             AuthRemoteDatasource(),
           ),
         ),
@@ -100,7 +106,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => const SplashScreen(),
           '/login': (context) => const LoginPage(),
-          '/home': (context) => const HomePage(),
+          '/home': (context) => const DashboardPage(),
         },
       ),
     );

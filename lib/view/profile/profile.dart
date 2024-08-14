@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
 
+import 'package:app_stream_anime/constant/fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,17 +16,23 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  Future<String?> getDataLogin()async{
+      final userData = await AuthLocalDatasource().getAuthData();
+      return userData.user?.name;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: AppColors.blackColors,
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.blueGrey[800],
+        backgroundColor: AppColors.primary,
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        title: const Text("Profile"),
+        title: Text("Profile", style: whiteTextStyle,),
         actions: [
           BlocListener<LogoutBloc, LogoutState>(
             listener: (context, state) {
@@ -75,7 +82,7 @@ class _ProfileState extends State<Profile> {
                 maxHeight: 110.0,
               ),
               width: MediaQuery.of(context).size.width,
-              color: Colors.blueGrey[800],
+              color: AppColors.primary,
               padding: const EdgeInsets.symmetric(
                 horizontal: 20.0,
               ),
@@ -89,24 +96,47 @@ class _ProfileState extends State<Profile> {
                   const SizedBox(
                     width: 8.0,
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Hello",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.0,
-                          ),
+                          style: whiteTextStyle.copyWith(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          )
                         ),
-                        Text(
-                          "Jhonny Deep",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white,
-                          ),
+                        FutureBuilder<String?>(
+                          future: getDataLogin(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Text(
+                                "Loading...",
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Text(
+                                "Error",
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            } else {
+                              return Text(
+                                snapshot.data ?? "No Name",
+                                style: whiteTextStyle.copyWith(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              );
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -136,146 +166,8 @@ class _ProfileState extends State<Profile> {
                 right: 20.0,
                 bottom: 0.0,
               ),
-              child: Card(
-                child: Container(
-                  padding: const EdgeInsets.all(20.0),
-                  child: const Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Icon(Icons.people_alt_outlined),
-                            Text(
-                              "13K",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Followers",
-                              style: TextStyle(
-                                fontSize: 10.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Icon(Icons.people_alt_outlined),
-                            Text(
-                              "2K",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Following",
-                              style: TextStyle(
-                                fontSize: 10.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Icon(Icons.post_add),
-                            Text(
-                              "2K",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Posts",
-                              style: TextStyle(
-                                fontSize: 10.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Builder(
-                builder: (context) {
-                  List items = [
-                    {
-                      "label": "Addresses",
-                      "icon": Icons.pin_drop,
-                      "on_tap": () {}
-                    },
-                    {
-                      "label": "Referral code",
-                      "icon": Icons.code,
-                      "on_tap": () {}
-                    },
-                    {
-                      "label": "Privacy Policy",
-                      "icon": Icons.info,
-                      "on_tap": () {}
-                    },
-                    {"label": "TOS", "icon": Icons.warning, "on_tap": () {}}
-                  ];
-
-                  return InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 12.0,
-                        horizontal: 12.0,
-                      ),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20.0),
-                        ),
-                      ),
-                      child: ListView.builder(
-                        itemCount: items.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          var item = items[index];
-                          return InkWell(
-                            onTap: () {
-                              if (item["on_tap"] != null) {
-                                item["on_tap"]!();
-                              }
-                            },
-                            child: SizedBox(
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: ListTile(
-                                  leading: Icon(
-                                    item["icon"],
-                                    size: 30.0,
-                                  ),
-                                  title: Text(item["label"]),
-                                  trailing: const Icon(
-                                    Icons.chevron_right,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            
           ],
         ),
       ),

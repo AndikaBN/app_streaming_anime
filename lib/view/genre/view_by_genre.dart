@@ -110,6 +110,8 @@ class _ViewByGenreState extends State<ViewByGenre> {
                 itemBuilder: (BuildContext context, int index) {
                   var anime = filteredAnimeList[index];
                   return CardItem(
+                    height: 160,
+                    width: 100,
                       image: anime.image,
                       title: anime.title,
                       genre: anime.genre,

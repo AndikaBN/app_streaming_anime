@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../constant/variables.dart';
 import '../localDatasource/auth_local_datasource.dart';
 
-class AuthRemoteDatasource{
+class AuthRemoteDatasource {
   Future<Either<String, AuthResponseModel>> login(
       String email, String password) async {
     final url = Uri.parse("${Variables.baseUrl}/api/login");
@@ -24,7 +24,7 @@ class AuthRemoteDatasource{
     }
   }
 
- Future<Either<String, String>> logout() async {
+  Future<Either<String, String>> logout() async {
     final authData = await AuthLocalDatasource().getAuthData();
     final url = Uri.parse("${Variables.baseUrl}/api/logout");
     final response = await http.post(
@@ -40,6 +40,25 @@ class AuthRemoteDatasource{
       return const Right("Logout success");
     } else {
       return const Left("Logout failed");
+    }
+  }
+
+  Future<Either<String, AuthResponseModel>> register(
+    String name,
+    String email,
+    String password,
+  ) async {
+    final url = Uri.parse("${Variables.baseUrl}/api/register");
+    final response = await http.post(url, body: {
+      "name": name,
+      "email": email,
+      "password": password,
+    });
+
+    if (response.statusCode == 200) {
+      return Right(AuthResponseModel.fromJson(response.body));
+    } else {
+      return const Left("Register Failed");
     }
   }
 }

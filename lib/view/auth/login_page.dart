@@ -22,7 +22,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
+
   @override
   void dispose() {
     emailController.dispose();
@@ -116,14 +116,16 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const AdminHomePage(),
+                                        builder: (context) =>
+                                            const AdminHomePage(),
                                       ),
                                     );
                                   } else {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const DashboardPage(),
+                                        builder: (context) =>
+                                            const DashboardPage(),
                                       ),
                                     );
                                   }
@@ -182,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               const Text(
-                                "Don’t have an Account ? ",
+                                "Belum punya akun ? ",
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -211,44 +213,6 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    if (MediaQuery.of(context).viewInsets.bottom == 0)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: CircleAvatar(
-                              radius: 26.0,
-                              backgroundColor: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(
-                                  "https://res.cloudinary.com/dotz74j1p/raw/upload/v1716045457/ikiyaxwxuj616fxbqive.png",
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20.0,
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: CircleAvatar(
-                              radius: 26.0,
-                              backgroundColor: Colors.white,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(
-                                  "https://res.cloudinary.com/dotz74j1p/raw/upload/v1716045460/fdggcuj6chrzspuog9qa.png",
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                   ],
                 ),
               ),

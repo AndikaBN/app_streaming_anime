@@ -14,6 +14,7 @@ class AnimeMovie extends Anime {
     required String image,
     required String description,
     required String status,
+    
     required this.video,
   }) : super(
           id: id,
@@ -29,17 +30,18 @@ class AnimeMovie extends Anime {
 final List<AnimeMovie> animeList = [
   AnimeMovie(
     id: 1,
-    title: 'Naruto',
+    title: 'Pecel',
     genre: 'Action',
     image: const $AssetsImagesGen().farFromHome.path,
     description:
         'Naruto Uzumaki, a hyperactive and knuckle-headed ninja, lives in Konohagakure, the Hidden Leaf village. Moments prior to his birth, a huge demon known as the Kyuubi, the Nine-tailed Fox, attacked Konohagakure and wreaked havoc. In order to put an end to the Kyuubi\'s rampage, the leader of the village, the Fourth Hokage, sacrificed his life and sealed the monstrous beast inside the newborn Naruto. Shunned because of the presence of the Kyuubi inside him, Naruto struggles to find his place in the village. He strives to become the Hokage of Konohagakure, and he meets many friends and foes along the way.',
     status: 'OnGoing',
-    video: 'http://192.168.18.66:8000/storage/movies/11.mp4',
+    video:
+        'http://192.168.18.66:8000/storage/videos/EOFml9OScfGbwtEQ8XLpCQxOGD9aIjPTte0X5Sw1.mp4',
   ),
   AnimeMovie(
     id: 2,
-    title: 'One Piece',
+    title: 'Sate Belayak',
     genre: 'Shounen',
     image: const $AssetsImagesGen().avenger.path,
     description:
@@ -50,7 +52,7 @@ final List<AnimeMovie> animeList = [
   //one punch man
   AnimeMovie(
     id: 3,
-    title: 'One Punch Man',
+    title: 'Ares Sedak Susu',
     genre: 'Comedy',
     image: const $AssetsImagesGen().noWayHome.path,
     description:
@@ -61,7 +63,7 @@ final List<AnimeMovie> animeList = [
   //attack on titan
   AnimeMovie(
     id: 4,
-    title: 'Attack on Titan',
+    title: 'Jus Jeruk',
     genre: 'Mystery',
     image: const $AssetsImagesGen().sangchi.path,
     description:

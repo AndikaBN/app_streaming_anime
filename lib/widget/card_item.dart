@@ -12,18 +12,22 @@ class CardItem extends StatelessWidget {
     required this.title,
     required this.genre,
     required this.status,
+    required this.width,
+    required this.height,
   });
 
   final String image;
   final String title;
   final String genre;
   final String status;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 160,
-      height: 240,
+      width: width,
+      height: height,
       margin: const EdgeInsets.only(right: 10.0),
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -90,6 +94,7 @@ class CardItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  Image.network(""),
                 ],
               ),
             ),

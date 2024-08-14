@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/model/response/series_response_model.dart';
 import '../delete_episode/delete_episode_bloc.dart';
 import '../episodes_bloc/episodes_bloc.dart';
+import 'detail_episode.dart';
 import 'hapus_episode.dart';
 
 class DetailSeries extends StatefulWidget {
@@ -87,10 +88,22 @@ class _DetailSeriesState extends State<DetailSeries> {
                               itemBuilder: (context, index) {
                                 final episode = episodes[index];
                                 return ListTile(
-                                  title: Text(episode.title!),
-                                  subtitle:
-                                      Text('Episode ${episode.nomorEpisode}'),
-                                  onTap: () {},
+                                  title: Text(
+                                    episode.title!,
+                                    style: whiteTextStyle,
+                                  ),
+                                  subtitle: Text(
+                                      'Episode ${episode.nomorEpisode}',
+                                      style: whiteTextStyle),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailEpisode(episodes: episode),
+                                      ),
+                                    );
+                                  },
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [

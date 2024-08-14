@@ -54,4 +54,6 @@ class Genre {
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
     };
+
+  firstWhere(bool Function(dynamic genre) param0, {required Genre Function() orElse}) {}
 }
