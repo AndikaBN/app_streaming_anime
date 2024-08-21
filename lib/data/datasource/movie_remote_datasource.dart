@@ -14,6 +14,7 @@ class MovieRemoteDatasource {
       headers: {
         "Authorization": "Bearer ${authData.token}",
         "accept": "application/json",
+        "Content-Type": "application/json",
       },
     );
 

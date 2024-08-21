@@ -1,3 +1,4 @@
+import 'package:app_stream_anime/constant/variables.dart';
 import 'package:app_stream_anime/data/model/response/movie_response_model.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,9 @@ class _DetailHomeState extends State<DetailHome> {
     super.initState();
     flickManager = FlickManager(
       videoPlayerController: VideoPlayerController.network(
-        widget.animeMovie.video!,
+        widget.animeMovie.video!.contains('http')
+            ? widget.animeMovie.video!
+            : '${Variables.baseUrl}/${widget.animeMovie.video}',
       ),
     );
   }

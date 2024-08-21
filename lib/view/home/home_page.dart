@@ -1,4 +1,6 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:app_stream_anime/admin/view/Genre/bloc/bloc/get_genre_bloc.dart';
+import 'package:app_stream_anime/constant/variables.dart';
 import 'package:app_stream_anime/data/model/response/genre_response_model.dart';
 import 'package:app_stream_anime/widget/card_item.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -90,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                         builder: (context, state) {
                           return state.maybeWhen(
                             orElse: () => const Center(child: Text('Tidak ada data')),
-                            loading: () => Center(child: CircularProgressIndicator()),
+                            loading: () => Center(child: const CircularProgressIndicator()),
                             loaded: (movies) {
                               var limitedMovies = movies.take(5).toList();
                               return Column(
@@ -123,7 +125,9 @@ class _HomePageState extends State<HomePage> {
                                               );
                                             },
                                             child: CardItem(
-                                              image: movie.image!,
+                                              image: movie.image!.contains('http')
+                                                  ? movie.image!
+                                                  : '${Variables.baseUrl}/${movie.image}',
                                               title: movie.title!,
                                               genre: genre,
                                               status: movie.status!,

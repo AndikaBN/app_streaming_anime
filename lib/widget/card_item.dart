@@ -94,7 +94,6 @@ class CardItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Image.network(""),
                 ],
               ),
             ),
